@@ -24,36 +24,38 @@ end
 require 'rspec'
 
 describe 'prime' do
-	it 'should return the sum of the first 1000 primes' do
-	  prime(1000).should eq 3682913
+  it 'should return the sum of the first 1000 primes' do
+    prime(1000).should eq 3682913
   end
 end
 
 
 # hash traversals
 class Hash
-	def r_empty?
-		empty = true
-		self.each do |k,v|
-			next if v.nil?
-			empty = false unless v.empty?
-			empty = v.r_empty? if v.kind_of? Hash
-		end
-		empty
-	end
+  def r_empty?
+    empty = true
+    self.each do |k,v|
+      next if v.nil?
+      empty = false unless v.empty?
+      empty = v.r_empty? if v.kind_of? Hash
+    end
+    empty
+  end
 end
 
 describe 'hash traverser' do
-	it 'should traverse and return true if all elements are empty' do
-		a = {:ruby => "", :queue => ""}
-		b = {:ruby => {:version => {:one => {"nine" => ""}, "two" => "=^.^="}}, :html => ""}
-		c = {:pets => {:dogs => {:my => {"niko" => ""}, "ollie" => ""}}, :cats => nil, :mice => ""}
-		d = {a: "", b: :two, c: ""}
+  it 'should traverse and return true if all elements are empty' do
+    a = {:ruby => "", :queue => ""}
+    b = {:ruby => {:version => {:one => {"nine" => ""}, "two" => "=^.^="}}, :html => ""}
+    c = {:pets => {:dogs => {:my => {"niko" => ""}, "ollie" => ""}}, :cats => nil, :mice => ""}
+    d = {a: "", b: :two, c: ""}
+    e = {:a => ['one','two']}
 
-		a.r_empty?.should be_true
-		b.r_empty?.should be_false
-		c.r_empty?.should be_true
-		d.r_empty?.should be_false
-		{}.r_empty?.should be_true
-	end
+    a.r_empty?.should be_true
+    b.r_empty?.should be_false
+    c.r_empty?.should be_true
+    d.r_empty?.should be_false
+    {}.r_empty?.should be_true
+    e.r_empty?.should be_false
+  end
 end
